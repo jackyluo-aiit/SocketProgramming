@@ -1,18 +1,17 @@
 package ClientServer;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class MutiClientServer {
+import static ClientServer.MultiClientServer.serverSocket;
+
+// TODO Auto-generated catch block
+public class Test {
     public static void main(String[] args) throws IOException {
-        ServerSocket serverSocket = new ServerSocket(0227);
-        ExecutorService pool = Executors.newFixedThreadPool(2);
+        ExecutorService pool = Executors.newFixedThreadPool(10);
         while (true) {
 //            Socket server = serverSocket.accept();
 //            Thread thread = new Thread(new Runnable() {
@@ -31,9 +30,10 @@ public class MutiClientServer {
 //                    }
 //                }
 //            });
+            System.out.println("...Waiting for client...");
             Socket socket = serverSocket.accept();
-            MyThread myThread = new MyThread(socket);
-            pool.execute(myThread);
+            MultiClientServer multiClientServer = new MultiClientServer(0227);
+            pool.execute(multiClientServer);
         }
     }
 }
